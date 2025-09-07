@@ -1,0 +1,12 @@
+<div class="nav-bar">
+  <div class="nav">
+    <div class="links-div">
+      @for (tab of tabs; track tab) {
+        <a class="link" [routerLink]="tab.path" routerLinkActive="active">
+          <span class="tab-name">{{ tab.name }}</span>
+        </a>
+      }
+    </div>
+    <button matButton="filled" class="logout-button" (click)="logout()">Logout</button>
+  </div>
+</div>

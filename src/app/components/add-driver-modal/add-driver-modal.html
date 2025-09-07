@@ -1,0 +1,46 @@
+<div class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="modal-title">Add driver</span>
+      <button class="close-button" (click)="cancel()">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      <form [formGroup]="form">
+        <mat-form-field appearance="outline" class="form-group">
+          <mat-label>Surname</mat-label>
+          <input type="text" matInput formControlName="surname" />
+          @if (form.controls.surname.hasError('required')) {
+            <mat-error>Surname is <strong>required</strong></mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-group">
+          <mat-label>Name</mat-label>
+          <input type="text" matInput formControlName="name" />
+          @if (form.controls.name.hasError('required')) {
+            <mat-error>Name is <strong>required</strong></mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-group">
+          <mat-label>Patronymic</mat-label>
+          <input type="text" matInput formControlName="patronymic" />
+          @if (form.controls.patronymic.hasError('required')) {
+            <mat-error>Patronymic is <strong>required</strong></mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-group">
+          <mat-label>Experience (years)</mat-label>
+          <input type="number" matInput formControlName="experience" min="0" />
+        </mat-form-field>
+        <button type="submit" style="display: none"></button>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-save" (click)="addDriver()">Add</button>
+    </div>
+  </div>
+</div>
