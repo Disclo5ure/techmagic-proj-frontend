@@ -15,17 +15,17 @@ export class NavBar {
 
   tabs = [
     {
-      name: 'Маршрути',
+      name: 'Routes',
       path: 'routes',
       icon: 'routes',
     },
     {
-      name: 'Водії',
+      name: 'Drivers',
       path: 'drivers',
       icon: 'drivers',
     },
     {
-      name: 'Виконані перевезення',
+      name: 'Completed trips',
       path: 'completed-trips',
       icon: 'trips',
     },

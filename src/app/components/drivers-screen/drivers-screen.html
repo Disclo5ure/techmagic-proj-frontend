@@ -37,6 +37,6 @@
 </div>
 
 @if (showModal) {
-  <app-add-driver-modal (onCancel)="closeModal()" (onSave)="onDriverSaved($event)">
+  <app-add-driver-modal (onCancel)="closeModal()" (onAdd)="onDriverAdded($event)">
   </app-add-driver-modal>
 }

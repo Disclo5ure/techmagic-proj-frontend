@@ -41,13 +41,13 @@ import { AddDriverModalComponent } from '../add-driver-modal/add-driver-modal';
 export class DriversScreen implements OnInit {
   private driversService = inject(DriversService);
 
-  drivers$!: Observable<IDriver[]>;
+  drivers$ = this.driversService.drivers$;
   showModal = false;
 
   columnsToDisplay = ['surname', 'name', 'patronymic', 'experience'];
 
   ngOnInit(): void {
-    this.drivers$ = this.driversService.getAll();
+    this.driversService.getAll();
   }
 
   openAddDriverModal(): void {
@@ -58,9 +58,7 @@ export class DriversScreen implements OnInit {
     this.showModal = false;
   }
 
-  onDriverSaved(driver: IDriver): void {
-    this.driversService.create(driver).subscribe();
-    this.drivers$ = this.driversService.getAll();
-    this.closeModal();
+  onDriverAdded(driver: IDriver): void {
+    this.driversService.create(driver).subscribe(() => this.closeModal());
   }
 }

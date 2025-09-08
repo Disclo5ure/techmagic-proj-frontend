@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { IDriver } from '../models/IDriver';
 import { AppConstants } from '../app.constants';
 
@@ -10,11 +10,21 @@ import { AppConstants } from '../app.constants';
 export class DriversService {
   private http = inject(HttpClient);
 
-  getAll(): Observable<IDriver[]> {
-    return this.http.get<IDriver[]>(`${AppConstants.API_URL}/drivers/getAllDrivers`);
+  private driversSubject = new BehaviorSubject<IDriver[]>([]);
+  public drivers$ = this.driversSubject.asObservable();
+
+  getAll(): void {
+    this.http
+      .get<IDriver[]>(`${AppConstants.API_URL}/drivers/getAllDrivers`)
+      .subscribe((drivers) => this.driversSubject.next(drivers));
   }
 
   create(driver: IDriver): Observable<IDriver> {
-    return this.http.post<IDriver>(`${AppConstants.API_URL}/drivers/create`, driver);
+    return this.http.post<IDriver>(`${AppConstants.API_URL}/drivers/createDriver`, driver).pipe(
+      tap((newDriver) => {
+        const currentDrivers = this.driversSubject.value;
+        this.driversSubject.next([...currentDrivers, newDriver]);
+      }),
+    );
   }
 }

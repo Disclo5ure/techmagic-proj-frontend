@@ -1,0 +1,67 @@
+<div class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="modal-title">Add trip</span>
+      <button class="close-button" (click)="cancel()">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      <form [formGroup]="form">
+        <mat-form-field appearance="outline" class="form-group">
+          <mat-label>Route</mat-label>
+          <mat-select formControlName="route" (selectionChange)="handleRouteChange()">
+            @for (route of routes; track route.name) {
+              <mat-option [value]="route._id">{{ route.name }}</mat-option>
+            }
+          </mat-select>
+          @if (form.controls.route.hasError('required')) {
+            <mat-error>Route is <strong>required</strong></mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-group">
+          <mat-label>Drivers</mat-label>
+          <mat-select formControlName="drivers" multiple (selectionChange)="resetMultiplier()">
+            @for (driver of drivers; track driver.name) {
+              <mat-option [value]="driver._id" [disabled]="isDriverOptionDisabled(driver._id)">{{
+                driver.name
+              }}</mat-option>
+            }
+          </mat-select>
+          @if (form.controls.drivers.hasError('required')) {
+            <mat-error>Driver is <strong>required</strong></mat-error>
+          }
+        </mat-form-field>
+
+        <mat-checkbox
+          class="checkbox"
+          formControlName="countExperience"
+          [disabled]="!(form.controls.cost.value && form.controls.drivers.value[0])"
+          (change)="setMultiplier()"
+          >Count driver experience</mat-checkbox
+        >
+
+        <p>Cost: {{ form.controls.cost.value }}</p>
+
+        <p>Driver bounty: {{ form.controls.bounty.value }}</p>
+
+        <mat-form-field class="start-date-picker">
+          <mat-label>Start date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="startDatePicker"
+            formControlName="startDate"
+            (dateChange)="setEndDate()"
+          />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #startDatePicker></mat-datepicker>
+        </mat-form-field>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-save" (click)="addTrip()">Add</button>
+    </div>
+  </div>
+</div>
