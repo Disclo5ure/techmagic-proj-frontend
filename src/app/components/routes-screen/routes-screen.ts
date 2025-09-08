@@ -12,7 +12,6 @@ import {
   MatRowDef,
   MatTable,
 } from '@angular/material/table';
-import { Observable } from 'rxjs';
 import { RoutesService } from '../../services/routes.service';
 import { IRoute } from '../../models/IRoute';
 import { MatButton } from '@angular/material/button';
@@ -41,13 +40,13 @@ import { AddRouteModal } from '../add-route-modal/add-route-modal';
 export class RoutesScreen implements OnInit {
   private routesService = inject(RoutesService);
 
-  routes$!: Observable<IRoute[]>;
+  routes$ = this.routesService.routes$;
   showModal = false;
 
   columnsToDisplay = ['name', 'distance', 'days', 'cost'];
 
   ngOnInit(): void {
-    this.routes$ = this.routesService.getAll();
+    this.routesService.getAll();
   }
 
   openAddRouteModal(): void {
@@ -58,9 +57,9 @@ export class RoutesScreen implements OnInit {
     this.showModal = false;
   }
 
-  onRouteSaved(route: IRoute): void {
-    this.routesService.create(route).subscribe();
-    this.routes$ = this.routesService.getAll();
-    this.closeModal();
+  onRouteAdded(route: IRoute): void {
+    this.routesService.create(route).subscribe(() => {
+      this.closeModal();
+    });
   }
 }

@@ -36,6 +36,6 @@
 </div>
 
 @if (showModal) {
-  <app-add-route-modal (onCancel)="closeModal()" (onAdd)="onRouteSaved($event)">
+  <app-add-route-modal (onCancel)="closeModal()" (onAdd)="onRouteAdded($event)">
   </app-add-route-modal>
 }

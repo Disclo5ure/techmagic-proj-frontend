@@ -22,7 +22,7 @@ import { MatInput } from '@angular/material/input';
 })
 export class AddDriverModalComponent {
   @Output() onCancel = new EventEmitter<void>();
-  @Output() onSave = new EventEmitter<any>();
+  @Output() onAdd = new EventEmitter<any>();
 
   private fb = inject(FormBuilder);
 
@@ -40,7 +40,7 @@ export class AddDriverModalComponent {
       !this.form.controls.name.errors &&
       !this.form.controls.patronymic.errors
     )
-      this.onSave.emit({
+      this.onAdd.emit({
         surname: this.form.controls.surname.value,
         name: this.form.controls.name.value,
         patronymic: this.form.controls.patronymic.value,
